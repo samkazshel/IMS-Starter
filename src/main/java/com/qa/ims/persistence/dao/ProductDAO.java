@@ -98,6 +98,11 @@ public class ProductDAO implements Dao<Product> {
 
 	/**
 	 * Updates the information of a specific product
+	 * 
+	 * @param product - takes in a product object, the id field will be used to
+	 * 					update that product in the database
+	 * 
+	 * @return
 	 */
 	@Override
 	public Product update(Product product) {
@@ -117,10 +122,19 @@ public class ProductDAO implements Dao<Product> {
 
 	/**
 	 * Deletes a product record from the database
+	 * 
+	 * @param id - id of the product
 	 */
 	@Override
 	public int delete(long id) {
-		
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				PreparedStatement statement = connection.prepareStatement("DELETE FROM products WHERE id = ?");) {
+			statement.setLong(1, id);
+			return statement.executeUpdate();
+		} catch (Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
 		return 0;
 	}
 
