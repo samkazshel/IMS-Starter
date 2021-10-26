@@ -36,6 +36,19 @@ public class ProductDAO implements Dao<Product> {
 		}
 		return new ArrayList<>();
 	}
+	
+	public Product readLatest() {
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				Statement statement = connection.createStatement();
+				ResultSet resultSet = statement.executeQuery("SELECT * FROM products ORDER BY id DESC LIMIT 1");) {
+			resultSet.next();
+			return modelFromResultSet(resultSet);
+		} catch (Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+		return null;
+	}
 
 	@Override
 	public Product read(Long id) {
@@ -44,8 +57,18 @@ public class ProductDAO implements Dao<Product> {
 	}
 
 	@Override
-	public Product create(Product t) {
-		// TODO Auto-generated method stub
+	public Product create(Product product) {
+		try(Connection connection = DBUtils.getInstance().getConnection();
+				PreparedStatement statement = connection
+						.prepareStatement("INSERT INTO products (product_name, product_value) VALUES (?, ?)");) {
+			statement.setString(1, product.getProduct_name());
+			statement.setFloat(2, product.getProduct_value());
+			statement.executeUpdate();
+			return readLatest();
+		} catch (Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}								
 		return null;
 	}
 
