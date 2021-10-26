@@ -96,15 +96,31 @@ public class ProductDAO implements Dao<Product> {
 		return null;
 	}
 
+	/**
+	 * Updates the information of a specific product
+	 */
 	@Override
-	public Product update(Product t) {
-		// TODO Auto-generated method stub
+	public Product update(Product product) {
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				PreparedStatement statement = connection
+						.prepareStatement("UPDATE products SET product_name = ?, product_value = ? WHERE id = ?");) {
+			statement.setString(1, product.getProduct_name());
+			statement.setFloat(2, product.getProduct_value());
+			statement.executeUpdate();
+			return read(product.getProduct_id());
+		} catch (Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
 		return null;
 	}
 
+	/**
+	 * Deletes a product record from the database
+	 */
 	@Override
 	public int delete(long id) {
-		// TODO Auto-generated method stub
+		
 		return 0;
 	}
 
