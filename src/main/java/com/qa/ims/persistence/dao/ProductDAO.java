@@ -11,7 +11,6 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.qa.ims.persistence.domain.Customer;
 import com.qa.ims.persistence.domain.Product;
 import com.qa.ims.utils.DBUtils;
 
@@ -20,6 +19,12 @@ public class ProductDAO implements Dao<Product> {
 
 	public static final Logger LOGGER = LogManager.getLogger();
 
+	
+	/**
+	 * Reads all the product data from the database
+	 * 
+	 * @return a list of products
+	 */
 	@Override
 	public List<Product> readAll() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
@@ -50,12 +55,31 @@ public class ProductDAO implements Dao<Product> {
 		return null;
 	}
 
+	/**
+	 * Reads a specific customer from the database
+	 * 
+	 */
 	@Override
 	public Product read(Long id) {
-		// TODO Auto-generated method stub
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				PreparedStatement statement = connection.prepareStatement("SELECT * FROM products WHERE id = ?");) {
+			statement.setLong(1, id);
+			try (ResultSet resultSet = statement.executeQuery();) {
+				resultSet.next();
+				return modelFromResultSet(resultSet);
+			}
+		} catch (Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
 		return null;
 	}
 
+	/**
+	 * Creates a product in the database
+	 * 
+	 * @param product - takes in a product object. id will be ignored
+	 */
 	@Override
 	public Product create(Product product) {
 		try(Connection connection = DBUtils.getInstance().getConnection();
