@@ -51,8 +51,10 @@ public class ProductDAO implements Dao<Product> {
 
 	@Override
 	public Product modelFromResultSet(ResultSet resultSet) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		Long product_id = resultSet.getLong("product_id");
+		String product_name = resultSet.getString("product_name");
+		float product_value = resultSet.getFloat("product_value");
+		return new Product(product_id, product_name, product_value);
 	}	
 	
 
