@@ -11,9 +11,17 @@ import com.qa.ims.utils.Utils;
 
 public class ProductController implements CrudController<Product>{
 
+	public static final Logger LOGGER = LogManager.getLogger();
+	
+	private ProductDAO productDAO;
+	private Utils utils;
+	
 	@Override
 	public List<Product> readAll() {
-		// TODO Auto-generated method stub
+		List<Product> products = productDAO.readAll();
+		for(Product product : products) {
+			LOGGER.info(product);
+		}
 		return null;
 	}
 
