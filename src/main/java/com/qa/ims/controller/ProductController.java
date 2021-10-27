@@ -16,6 +16,9 @@ public class ProductController implements CrudController<Product>{
 	private ProductDAO productDAO;
 	private Utils utils;
 	
+	/**
+	 * Reads all products to the logger
+	 */
 	@Override
 	public List<Product> readAll() {
 		List<Product> products = productDAO.readAll();
@@ -27,19 +30,24 @@ public class ProductController implements CrudController<Product>{
 
 	@Override
 	public Product create() {
-		// TODO Auto-generated method stub
-		return null;
+		LOGGER.info("Please enter a product name: ");
+		String product_name = utils.getString();
+		LOGGER.info("Please enter a product value: ");
+		Double product_value = utils.getDouble();
+		Product product = productDAO.create(new Product(product_name, product_value));
+		LOGGER.info("Product Created");
+		return product;
 	}
 
 	@Override
 	public Product update() {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
 	@Override
 	public int delete() {
-		// TODO Auto-generated method stub
+		
 		return 0;
 	}
 	
