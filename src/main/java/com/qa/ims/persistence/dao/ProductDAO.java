@@ -45,7 +45,7 @@ public class ProductDAO implements Dao<Product> {
 	public Product readLatest() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery("SELECT * FROM products ORDER BY id DESC LIMIT 1");) {
+				ResultSet resultSet = statement.executeQuery("SELECT * FROM products ORDER BY product_id DESC LIMIT 1");) {
 			resultSet.next();
 			return modelFromResultSet(resultSet);
 		} catch (Exception e) {
@@ -62,7 +62,7 @@ public class ProductDAO implements Dao<Product> {
 	@Override
 	public Product read(Long id) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
-				PreparedStatement statement = connection.prepareStatement("SELECT * FROM products WHERE id = ?");) {
+				PreparedStatement statement = connection.prepareStatement("SELECT * FROM products WHERE product_id = ?");) {
 			statement.setLong(1, id);
 			try (ResultSet resultSet = statement.executeQuery();) {
 				resultSet.next();
@@ -108,9 +108,10 @@ public class ProductDAO implements Dao<Product> {
 	public Product update(Product product) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				PreparedStatement statement = connection
-						.prepareStatement("UPDATE products SET product_name = ?, product_value = ? WHERE id = ?");) {
+						.prepareStatement("UPDATE products SET product_name = ?, product_value = ? WHERE product_id = ?");) {
 			statement.setString(1, product.getProduct_name());
 			statement.setDouble(2, product.getProduct_value());
+			statement.setLong(3, product.getProduct_id());
 			statement.executeUpdate();
 			return read(product.getProduct_id());
 		} catch (Exception e) {
@@ -128,7 +129,7 @@ public class ProductDAO implements Dao<Product> {
 	@Override
 	public int delete(long id) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
-				PreparedStatement statement = connection.prepareStatement("DELETE FROM products WHERE id = ?");) {
+				PreparedStatement statement = connection.prepareStatement("DELETE FROM products WHERE product_id = ?");) {
 			statement.setLong(1, id);
 			return statement.executeUpdate();
 		} catch (Exception e) {
