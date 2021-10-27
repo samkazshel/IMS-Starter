@@ -16,6 +16,12 @@ public class ProductController implements CrudController<Product>{
 	private ProductDAO productDAO;
 	private Utils utils;
 	
+	public ProductController(ProductDAO productDAO, Utils utils) {
+		super();
+		this.productDAO = productDAO;
+		this.utils = utils;
+	}
+	
 	/**
 	 * Reads all products to the logger
 	 */
