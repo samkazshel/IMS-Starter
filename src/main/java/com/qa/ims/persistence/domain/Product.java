@@ -5,16 +5,14 @@ import java.util.Objects;
 public class Product {
 	private Long product_id;
 	private String product_name;
-	private float product_value;
+	private Double product_value;
 	
-	public Product(String product_name, float product_value) {
-		super();
+	public Product(String product_name, Double product_value) {
 		this.product_name = product_name;
 		this.product_value = product_value;
 	}
 
-	public Product(Long product_id, String product_name, float product_value) {
-		super();
+	public Product(Long product_id, String product_name, Double product_value) {
 		this.product_id = product_id;
 		this.product_name = product_name;
 		this.product_value = product_value;
@@ -36,11 +34,11 @@ public class Product {
 		this.product_name = product_name;
 	}
 
-	public float getProduct_value() {
+	public Double getProduct_value() {
 		return product_value;
 	}
 
-	public void setProduct_value(float product_value) {
+	public void setProduct_value(Double product_value) {
 		this.product_value = product_value;
 	}
 	
@@ -65,8 +63,10 @@ public class Product {
 			return false;
 		Product other = (Product) obj;
 		return Objects.equals(product_id, other.product_id) && Objects.equals(product_name, other.product_name)
-				&& Float.floatToIntBits(product_value) == Float.floatToIntBits(other.product_value);
+				&& Objects.equals(product_value, other.product_value);
 	}
+
+	
 	
 	
 	
