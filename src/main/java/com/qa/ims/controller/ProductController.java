@@ -28,6 +28,9 @@ public class ProductController implements CrudController<Product>{
 		return null;
 	}
 
+	/**
+	 * Creates a product by taking in user input
+	 */
 	@Override
 	public Product create() {
 		LOGGER.info("Please enter a product name: ");
@@ -39,16 +42,30 @@ public class ProductController implements CrudController<Product>{
 		return product;
 	}
 
+	/**
+	 * Updated an existing product by taking in user input
+	 */
 	@Override
 	public Product update() {
-		
-		return null;
+		LOGGER.info("Please enter the id of the product you would like to update: ");
+		Long id = utils.getLong();
+		LOGGER.info("Please enter a product name: ");
+		String product_name = utils.getString();
+		LOGGER.info("Please enter a product value: ");
+		Double product_value = utils.getDouble();
+		Product product = productDAO.update(new Product(id, product_name, product_value));
+		LOGGER.info("Product updated");
+		return product;
 	}
 
+	/**
+	 * Deletes an existing product by the id of the product
+	 */
 	@Override
 	public int delete() {
-		
-		return 0;
+		LOGGER.info("Please enter the id of the product you would like to delete: ");
+		Long id = utils.getLong();
+		return productDAO.delete(id);
 	}
 	
 	
