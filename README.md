@@ -1,7 +1,7 @@
-Coverage: 34%
-# Project Title
+Coverage: ?
+# Fundemental Project - IMS (Inventory Management System)
 
-One Paragraph of project description goes here
+This project is a Inventory Management System, which allows for all the standard CRUD operations. Using MySQL as the database, Maven as the build tool, and JUnit as the testing platform.
 
 ## Getting Started
 
@@ -75,6 +75,7 @@ We use [SemVer](http://semver.org/) for versioning.
 ## Authors
 
 * **Chris Perrins** - *Initial work* - [christophperrins](https://github.com/christophperrins)
+* **Samuel Sheldon** - *Development* - [samkazshel](https://github.com/samkazshel)
 
 ## License
 
@@ -84,6 +85,6 @@ This project is licensed under the MIT license - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-* Hat tip to anyone whose code was used
+* Initial Code work by Chris Perrins
 * Inspiration
 * etc

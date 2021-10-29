@@ -6,7 +6,13 @@ import org.apache.logging.log4j.Logger;
 import com.qa.ims.controller.Action;
 import com.qa.ims.controller.CrudController;
 import com.qa.ims.controller.CustomerController;
+import com.qa.ims.controller.OrderController;
+import com.qa.ims.controller.ProductController;
+import com.qa.ims.controller.OrderLineController;
+import com.qa.ims.persistence.dao.OrderDAO;
+import com.qa.ims.persistence.dao.OrderLineDAO;
 import com.qa.ims.persistence.dao.CustomerDAO;
+import com.qa.ims.persistence.dao.ProductDAO;
 import com.qa.ims.persistence.domain.Domain;
 import com.qa.ims.utils.DBUtils;
 import com.qa.ims.utils.Utils;
@@ -16,12 +22,22 @@ public class IMS {
 	public static final Logger LOGGER = LogManager.getLogger();
 
 	private final CustomerController customers;
+	private final OrderController orders;
+	private final ProductController products;
+	private final OrderLineController orderlines;
 	private final Utils utils;
 
 	public IMS() {
+		
 		this.utils = new Utils();
 		final CustomerDAO custDAO = new CustomerDAO();
+		final OrderDAO ordDAO = new OrderDAO();
+		final ProductDAO prodDAO = new ProductDAO();
+		final OrderLineDAO orlineDAO = new OrderLineDAO();
 		this.customers = new CustomerController(custDAO, utils);
+		this.orders = new OrderController(ordDAO, utils);
+		this.products = new ProductController(prodDAO, utils);
+		this.orderlines = new OrderLineController(orlineDAO, utils);
 	}
 
 	public void imsSystem() {
@@ -50,8 +66,13 @@ public class IMS {
 				active = this.customers;
 				break;
 			case ITEM:
+				active = this.products;
 				break;
 			case ORDER:
+				active = this.orders;
+				break;
+			case ORDERLINE:
+				active = this.orderlines;
 				break;
 			case STOP:
 				return;

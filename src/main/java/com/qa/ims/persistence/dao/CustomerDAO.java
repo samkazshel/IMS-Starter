@@ -81,6 +81,11 @@ public class CustomerDAO implements Dao<Customer> {
 		}
 		return null;
 	}
+	
+	/**
+	 * Reads a specific customer from the database
+	 * 
+	 */
 
 	@Override
 	public Customer read(Long id) {
