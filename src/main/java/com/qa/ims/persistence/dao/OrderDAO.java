@@ -76,7 +76,7 @@ public class OrderDAO implements Dao<Order>{
 						.prepareStatement("INSERT INTO orders(customer_id, customer_name, order_date) VALUES (?, ?. ?)");) {
 			statement.setLong(1, order.getCustomer_id());
 			statement.setString(2, order.getCustomer_name());
-			statement.setDate(3, order.getOrder_date());
+			statement.setString(3, order.getOrder_date());
 			statement.executeUpdate();
 			return readLatest();
 		} catch (Exception e) {
@@ -90,10 +90,10 @@ public class OrderDAO implements Dao<Order>{
 	public Order update(Order order) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				PreparedStatement statement = connection
-						.prepareStatement("UPDATE customers SET customer_id = ?, customer_name = ?, order date = ?  WHERE order_id = ?");) {
+						.prepareStatement("UPDATE orders SET customer_id = ?, customer_name = ?, order date = ?  WHERE order_id = ?");) {
 			statement.setLong(1, order.getCustomer_id());
 			statement.setString(2, order.getCustomer_name());
-			statement.setDate(3, order.getOrder_date());
+			statement.setString(3, order.getOrder_date());
 			statement.executeUpdate();
 			return read(order.getOrder_id());
 		} catch (Exception e) {
@@ -105,14 +105,24 @@ public class OrderDAO implements Dao<Order>{
 
 	@Override
 	public int delete(long id) {
-		// TODO Auto-generated method stub
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				PreparedStatement statement = connection.prepareStatement("DELETE FROM orders WHERE order_id = ?");) {
+			statement.setLong(1, id);
+			return statement.executeUpdate();
+		} catch (Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
 		return 0;
 	}
 
 	@Override
 	public Order modelFromResultSet(ResultSet resultSet) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		Long order_id = resultSet.getLong("order_id");
+		Long customer_id = resultSet.getLong("customer_id");
+		String customer_name = resultSet.getString("customer_name");
+		String order_date = resultSet.getString("order_date");
+		return new Order(order_id, customer_id, customer_name, order_date);
 	}
 
 }
