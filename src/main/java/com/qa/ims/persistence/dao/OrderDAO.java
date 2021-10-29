@@ -56,7 +56,7 @@ public class OrderDAO implements Dao<Order>{
 	@Override
 	public Order read(Long id) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
-				PreparedStatement statement = connection.prepareStatement("SELECT Orders.order_id, Orders.customer_name, OrderLine.product_id, OrderLine.quantity, OrderLine.price FROM orders INNER JOIN orderlines ON Orders.OrderID=OrderLine.OrderID");) {
+				PreparedStatement statement = connection.prepareStatement("SELECT os.order_id, os.customer_name, ol.product_id, ol.quantity, ol.price FROM orders os RIGHT JOIN order_lines ol ON os.order_id=ol.order_id ORDER BY os.order_id");) {
 			statement.setLong(1, id);
 			try (ResultSet resultSet = statement.executeQuery();) {
 				resultSet.next();
