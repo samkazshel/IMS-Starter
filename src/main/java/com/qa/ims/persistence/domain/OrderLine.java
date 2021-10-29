@@ -7,16 +7,26 @@ public class OrderLine {
 	private Long order_id;
 	private int quantity;
 	private Long product_id;
-	private float price;
+	private Double price;
 	
-	public OrderLine(Long orderline_id, Long order_id, int quantity, Long product_id, float price) {
-		super();
+	public OrderLine(Long orderline_id, Long order_id, int quantity, Long product_id, Double price) {
 		this.orderline_id = orderline_id;
 		this.order_id = order_id;
 		this.quantity = quantity;
 		this.product_id = product_id;
 		this.price = price;
 	}
+	
+	
+
+	public OrderLine(Long order_id, int quantity, Long product_id, Double price) {
+		this.order_id = order_id;
+		this.quantity = quantity;
+		this.product_id = product_id;
+		this.price = price;
+	}
+
+
 
 	public Long getOrderline_id() {
 		return orderline_id;
@@ -50,11 +60,11 @@ public class OrderLine {
 		this.product_id = product_id;
 	}
 
-	public float getPrice() {
+	public Double getPrice() {
 		return price;
 	}
 
-	public void setPrice(float price) {
+	public void setPrice(Double price) {
 		this.price = price;
 	}
 
@@ -64,10 +74,14 @@ public class OrderLine {
 				+ ", product_id=" + product_id + ", price=" + price + "]";
 	}
 
+
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(order_id, orderline_id, price, product_id, quantity);
 	}
+
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -79,9 +93,11 @@ public class OrderLine {
 			return false;
 		OrderLine other = (OrderLine) obj;
 		return Objects.equals(order_id, other.order_id) && Objects.equals(orderline_id, other.orderline_id)
-				&& Float.floatToIntBits(price) == Float.floatToIntBits(other.price)
-				&& Objects.equals(product_id, other.product_id) && quantity == other.quantity;
+				&& Objects.equals(price, other.price) && Objects.equals(product_id, other.product_id)
+				&& quantity == other.quantity;
 	}
+
+
 	
 	
 

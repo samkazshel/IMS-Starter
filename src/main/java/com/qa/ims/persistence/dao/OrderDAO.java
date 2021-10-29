@@ -43,7 +43,7 @@ public class OrderDAO implements Dao<Order>{
 	public Order readLatest() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery("SELECT * FROM orders ORDER BY id DESC LIMIT 1");) {
+				ResultSet resultSet = statement.executeQuery("SELECT * FROM orders ORDER BY order_id DESC LIMIT 1");) {
 			resultSet.next();
 			return modelFromResultSet(resultSet);
 		} catch (Exception e) {
@@ -56,7 +56,7 @@ public class OrderDAO implements Dao<Order>{
 	@Override
 	public Order read(Long id) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
-				PreparedStatement statement = connection.prepareStatement("SELECT * FROM orders WHERE id = ?");) {
+				PreparedStatement statement = connection.prepareStatement("SELECT Orders.order_id, Orders.customer_name, OrderLine.product_id, OrderLine.quantity, OrderLine.price FROM orders INNER JOIN orderlines ON Orders.OrderID=OrderLine.OrderID");) {
 			statement.setLong(1, id);
 			try (ResultSet resultSet = statement.executeQuery();) {
 				resultSet.next();
@@ -73,7 +73,7 @@ public class OrderDAO implements Dao<Order>{
 	public Order create(Order order) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				PreparedStatement statement = connection
-						.prepareStatement("INSERT INTO orders(customer_id, customer_name, order_date) VALUES (?, ?. ?)");) {
+						.prepareStatement("INSERT INTO orders(customer_id, customer_name, order_date) VALUES (?, ?, ?)");) {
 			statement.setLong(1, order.getCustomer_id());
 			statement.setString(2, order.getCustomer_name());
 			statement.setString(3, order.getOrder_date());
