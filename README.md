@@ -1,4 +1,4 @@
-Coverage: ?
+Coverage: 40%
 # Fundemental Project - IMS (Inventory Management System)
 
 This project is a Inventory Management System, which allows for all the standard CRUD operations. Using MySQL as the database, Maven as the build tool, and JUnit as the testing platform.
@@ -12,7 +12,7 @@ These instructions will get you a copy of the project up and running on your loc
 What things you need to install the software and how to install them
 
 ```
-Give examples
+You will need Java, a Local MySQL instance.
 ```
 
 ### Installing
@@ -22,13 +22,8 @@ A step by step series of examples that tell you how to get a development env run
 Say what the step will be
 
 ```
-Give the example
-```
-
-And repeat
-
-```
-until finished
+1. Find location of ims .jar file
+2. Run within the command line using java.
 ```
 
 End with an example of getting some data out of the system or using it for a little demo
@@ -42,14 +37,13 @@ Explain how to run the automated tests for this system. Break down into which te
 Explain what these tests test, why and how to run them
 
 ```
-Give an example
+The tests check over the inputs that have been given to the database to ensure nothing is being altered or changed as it is input.
 ```
 
 ### Integration Tests 
 Explain what these tests test, why and how to run them
 
 ```
-Give an example
 ```
 
 ### And coding style tests
@@ -57,12 +51,11 @@ Give an example
 Explain what these tests test and why
 
 ```
-Give an example
 ```
 
 ## Deployment
 
-Add additional notes about how to deploy this on a live system
+You can deploy this using the git bash command line and a java version on you pc.
 
 ## Built With
 
