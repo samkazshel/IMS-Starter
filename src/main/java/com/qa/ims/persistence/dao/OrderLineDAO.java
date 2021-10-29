@@ -30,6 +30,22 @@ public class OrderLineDAO{
 		}
 		return null;
 	}
+	
+	public Double getPrice(long id) {
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				PreparedStatement statement = connection.prepareStatement("SELECT product_value FROM products WHERE product_id = ?");) {
+			statement.setLong(1, id);
+			try (ResultSet resultSet = statement.executeQuery();){
+				resultSet.next();
+				return getPriceResultSet(resultSet);
+			}
+		} catch (Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+		return null;
+		
+	}
 
 	public OrderLine create(OrderLine orderline) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
@@ -67,5 +83,9 @@ public class OrderLineDAO{
 		Double price = resultSet.getDouble("price");
 		return new OrderLine(order_id, quantity, product_id, price);
 	}
-
+	
+	public Double getPriceResultSet(ResultSet resultSet) throws SQLException {
+		Double price = resultSet.getDouble("product_value");
+		return price;
+	}
 }

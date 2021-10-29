@@ -54,8 +54,7 @@ public class Utils {
 	
 	public int getInt() {
 		String input = null;
-		@SuppressWarnings("null")
-		int intInput = (Integer) null;
+		Integer intInput = null;
 		do {
 			try {
 				input = getString();
@@ -63,7 +62,7 @@ public class Utils {
 			} catch (NumberFormatException nfe) {
 				LOGGER.info("Error - Please enter a number");
 			}
-		} while (intInput == (Integer) null);
+		} while (intInput == null);
 		return intInput;
 	}
 

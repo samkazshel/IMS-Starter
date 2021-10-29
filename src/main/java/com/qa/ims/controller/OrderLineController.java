@@ -35,7 +35,7 @@ public class OrderLineController implements CrudController<OrderLine>{
 		Long product_id = utils.getLong();
 		LOGGER.info("Please enter the quantity of this product: ");
 		int quantity = utils.getInt();
-		Double price = product.getProduct_value();
+		Double price = orderlineDAO.getPrice(product_id);
 		OrderLine orderline = orderlineDAO.create(new OrderLine(order_id, quantity, product_id, price));
 		return orderline;
 	}
